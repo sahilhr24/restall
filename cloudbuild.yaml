@@ -1,0 +1,16 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '<your-region>-docker.pkg.dev/<your-project-id>/my-repo/hello-world:$SHORT_SHA', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '<your-region>-docker.pkg.dev/<your-project-id>/my-repo/hello-world:$SHORT_SHA']
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/hello-world'
+  - 'hello-world=<your-region>-docker.pkg.dev/<your-project-id>/my-repo/hello-world:$SHORT_SHA'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=<your-zone>'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=hello-world-cluster'
