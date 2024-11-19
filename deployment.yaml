@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
+  name: hello-world-deployment
   labels:
     app: hello-world
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: hello-world
@@ -15,8 +15,8 @@ spec:
         app: hello-world
     spec:
       containers:
-      - name: hello-world
-        image: nginx:alpine
+      - name: hello-world-container
+        image: asia-south1-docker.pkg.dev/second-metrics-439004-n9/my-repo/hello-world:v1
         ports:
         - containerPort: 80
 ---
